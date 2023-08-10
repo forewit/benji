@@ -3,23 +3,24 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  export let text: string = "";
-  export let minDelay: number = 30;
-  export let maxDelay: number = 200;
-  export let blinkDelay: number = 500;
-  export let disableCursor: boolean = false;
-
-  // states
-  let isTyping = false;
+  // state management
   let isBlinking = true;
   let cursor = " ";
   let timeoutID: number;
+  let displayedText: string = "";
 
+  // export variables
+  export let text = "";
+  export let minDelay = 30;
+  export let maxDelay = 200;
+  export let blinkDelay = 500;
+  export let disableCursor = false;
+
+  // export function for starting the typewriter
   export const start = async () => {
     // reset then start typing
     reset();
     isBlinking = false;
-    isTyping = true;
 
     // loop through each char to type
     let delay: number;
@@ -27,31 +28,30 @@
       // delay for a bit
       delay = randBetween(minDelay, maxDelay);
       if (text[i] == " ") delay *= 3; // extend delay if the char is a space
-      await new Promise((res) => timeoutID = setTimeout(res, delay));
+      await new Promise((res) => (timeoutID = setTimeout(res, delay)));
 
-      // confirm we are still typing then add the char
-      if (isTyping) displayedText += text[i];
-      else return;
+      // then add the char
+      displayedText += text[i];
     }
 
     // finished typing
     isBlinking = true;
-    return Promise.resolve()
+    return Promise.resolve();
   };
 
+  // export function to reset the typewriter
   export const reset = () => {
     clearTimeout(timeoutID);
     displayedText = "";
     isBlinking = true;
-    isTyping = false;
   };
 
+  // helper function
   function randBetween(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  let displayedText: string = "";
-
+  // keep the cursor blinking
   function updateCursor() {
     if (disableCursor) cursor = " ";
     else if (!isBlinking) cursor = "| ";
@@ -63,10 +63,4 @@
   });
 </script>
 
-<p>{displayedText}{cursor}</p>
-
-<style>
-  p {
-    white-space: pre-wrap;
-  }
-</style>
+<p style="white-space: pre-wrap;">{displayedText}{cursor}</p>
