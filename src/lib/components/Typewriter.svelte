@@ -4,69 +4,69 @@
   import { onMount } from "svelte";
 
   export let text: string = "";
-  export let startDelay: number = 1000;
   export let minDelay: number = 30;
   export let maxDelay: number = 200;
   export let blinkDelay: number = 500;
   export let disableCursor: boolean = false;
 
-  let callback: () => any = () => {};
-  let displayedText: string = "";
-  let cursor = {
-    text: "| ",
-    isVisible: true,
-    isBlinking: true,
+  // states
+  let isTyping = false;
+  let isBlinking = true;
+  let cursor = " ";
+  let timeoutID: number;
+
+  export const start = async () => {
+    // reset then start typing
+    reset();
+    isBlinking = false;
+    isTyping = true;
+
+    // loop through each char to type
+    let delay: number;
+    for (let i = 0; i < text.length; i++) {
+      // delay for a bit
+      delay = randBetween(minDelay, maxDelay);
+      if (text[i] == " ") delay *= 3; // extend delay if the char is a space
+      await new Promise((res) => timeoutID = setTimeout(res, delay));
+
+      // confirm we are still typing then add the char
+      if (isTyping) displayedText += text[i];
+      else return;
+    }
+
+    // finished typing
+    isBlinking = true;
+    return Promise.resolve()
   };
 
-  export const start = (onComplete?: () => any) => {
-    index = 0;
-    displayedText = "";
-    cursor.isBlinking = true;
+  export const reset = () => {
     clearTimeout(timeoutID);
-    timeoutID = setTimeout(typeNext, startDelay);
-    if (onComplete) callback = onComplete;
+    displayedText = "";
+    isBlinking = true;
+    isTyping = false;
   };
-
-  function updateCursor() {
-    if (disableCursor) cursor.text = " ";
-    else if (!cursor.isBlinking) cursor.text = "| ";
-    else cursor.text = cursor.text == " " ? "| " : " ";
-    setTimeout(updateCursor, blinkDelay);
-  }
 
   function randBetween(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  let timeoutID: number;
-  let index = 0;
-  function typeNext() {
-    if (index >= text.length) {
-      cursor.isBlinking = true;
-      callback();
-      return;
-    } else if (index == 0) {
-      cursor.isBlinking = false;
-    }
+  let displayedText: string = "";
 
-    let char = text[index];
-    let delay = randBetween(minDelay, maxDelay);
-    if (text[index + 1] == " ") delay *= 2;
-
-    displayedText += char;
-    index++;
-    timeoutID = setTimeout(typeNext, delay);
+  function updateCursor() {
+    if (disableCursor) cursor = " ";
+    else if (!isBlinking) cursor = "| ";
+    else cursor = cursor == " " ? "| " : " ";
   }
 
   onMount(() => {
-    updateCursor();
+    setInterval(updateCursor, blinkDelay);
   });
 </script>
 
-<p id="content">{displayedText}{cursor.text}</p>
+<p>{displayedText}{cursor}</p>
 
 <style>
-  #content {
+  p {
     white-space: pre-wrap;
   }
 </style>

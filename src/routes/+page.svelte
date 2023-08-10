@@ -1,15 +1,15 @@
 <script lang="ts">
   import Typewriter from "$lib/components/Typewriter.svelte";
 
-  let typer: Typewriter;
+  let typewriter1: Typewriter;
 
-  function getGoing () {
-    typer.start(()=>{
-        console.log("Finished!");
-    })
+  async function getGoing() {
+    await typewriter1.start();
+    console.log("finished");
   }
 </script>
 
-<h1>Hey Benji</h1>
-<Typewriter bind:this={typer} text="Here is some thrilling content!"  />
-<button on:click={getGoing}>Start!</button>
+<Typewriter bind:this={typewriter1} text="Here is some thrilling content!" />
+
+<button on:click={getGoing}>Start</button>
+<button on:click={typewriter1.reset}>Reset</button>
