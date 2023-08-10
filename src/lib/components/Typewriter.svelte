@@ -25,12 +25,16 @@
     // loop through each char to type
     let delay: number;
     for (let i = 0; i < text.length; i++) {
-      // delay for a bit
+      // delay for a bit between characters
       delay = randBetween(minDelay, maxDelay);
-      if (text[i] == " ") delay *= 3; // extend delay if the char is a space
-      await new Promise((res) => (timeoutID = setTimeout(res, delay)));
 
-      // then add the char
+      // extend delay for a stylized effect
+      if (text[i] == " ") delay *= 3;
+      if (i > 0 && text[i-1].match(/[.,!]/)) delay += 500; 
+      if (i > 0 && text[i-1] == "\n" && text[i] != "\n") delay += 800;
+      
+      // await delay then add the char
+      await new Promise((res) => (timeoutID = setTimeout(res, delay)));
       displayedText += text[i];
     }
 
