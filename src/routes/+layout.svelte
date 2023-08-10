@@ -58,12 +58,21 @@
     background: aliceblue;
   }
 
+  /* import the monaco font */
+  @font-face {
+    font-family: "Poltawski Nowy";
+    font-style: normal;
+    font-weight: normal;
+    src: url("/fonts/PoltawskiNowy.ttf") format("truetype");
+  }
+
   :global(*) {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
   }
   :global(html, body) {
+    font-family: "Poltawski Nowy";
     background: lightskyblue;
   }
 </style>

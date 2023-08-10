@@ -3,11 +3,11 @@
 
   let typewriter1: Typewriter;
 
-  let block1 = `Dear Benji (or whoever is reading 😊),
+  let block1 = `Dear Benji or whoever is reading 😊,
 
-if you are seeing this, please shoot me (Marc) a text!
+Please shoot me (Marc) a text so I know you saw this!
 
-Talk to ya soon :)`;
+Talk to ya soon 🎉`;
 
   async function begin() {
     await typewriter1.start();
@@ -20,6 +20,7 @@ Talk to ya soon :)`;
 </script>
 
 <Typewriter bind:this={typewriter1} text={block1} />
+
 
 <button on:click={begin}>Begin</button>
 <button on:click={reset}>Reset</button>
