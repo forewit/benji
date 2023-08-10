@@ -1,2 +1,9 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+  import Typewriter from "$lib/components/Typewriter.svelte";
+
+
+</script>
+
+<h1>Hey Benji</h1>
+<Typewriter text="here is some thrilling content string"/>
+
