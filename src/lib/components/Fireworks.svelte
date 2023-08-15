@@ -1,33 +1,29 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-
   const DEFAULT_SIZE = 30;
   const DEFAULT_DELAY = 0;
 
   interface Firework {
-    x: Number; // .firework { left % }
-    y: Number; // .firework { top % } 
-    offsetX: Number; // .firework { --x vmin }
-    offsetY: Number; // .firework { --initialY vmin }
-    size?: Number; // .firework { --finalSize vmin }
-    delay?: Number; // .firework { --delay s }
+    x: number; // .firework { left % }
+    y: number; // .firework { top % }
+    offsetX: number; // .firework { --x vmin }
+    offsetY: number; // .firework { --initialY vmin }
+    size?: number; // .firework { --finalSize vmin }
+    delay?: number; // .firework { --delay s }
   }
 
-  let fireworks: Firework[] = [];
+  let fireworkElms: HTMLDivElement[] = [];
+  let activeFireworks: Firework[] = [];
+  let iterationCount = "infinite";
 
-  export function launch(fireworks: Firework[], repeat: Number) {
-
+  export async function launch(repeat: number, ...fireworks: Firework[]) {
+    iterationCount = repeat < 0 ? "infinite" : repeat.toString();
+    activeFireworks = fireworks;
   }
-
-  fireworks = [
-    { x: 30, y: 30, offsetX: 20, offsetY: 80, size: 20 },
-    { x: 70, y: 40, offsetX: -20, offsetY: 80, delay: -0.25, size: 20 },
-    { x: 50, y: 20, offsetX: 0, offsetY: 100, delay: -0.4, size: 40 }
-  ];
 </script>
 
-{#each fireworks as firework}
+{#each activeFireworks as firework, i}
   <div
+    bind:this={fireworkElms[i]}
     class="firework"
     style="
     left:{firework.x}%; 
@@ -35,11 +31,13 @@
     --x:{firework.offsetX}vmin; 
     --initialY:{firework.offsetY}vmin; 
     --finalSize:{firework.size || DEFAULT_SIZE}vmin; 
-    --delay:{firework.delay || DEFAULT_DELAY}s;"
+    --delay:{firework.delay || DEFAULT_DELAY}s;
+    animation-iteration-count:{iterationCount};"
   />
 {/each}
 
 <style>
+  /* https://alvaromontoro.com/blog/68002/creating-a-firework-effect-with-css */
   @keyframes firework {
     0% {
       transform: translate(var(--x), var(--initialY));
@@ -68,10 +66,11 @@
     --color4: lime;
     --color5: gold;
     --color6: mediumseagreen;
-    --y: calc(var(--finalSize)*-1/2);
+    --y: calc(var(--finalSize) * -1 / 2);
     /* --x: 0vmin; */
     /* --initialY: 0vmin; */
     content: "";
+    opacity: 0;
     animation: firework 2s infinite;
     animation-delay: var(--delay);
     position: absolute;
