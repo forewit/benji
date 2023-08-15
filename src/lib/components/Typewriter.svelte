@@ -17,7 +17,7 @@
   export let disableCursor = false;
 
   // export function for starting the typewriter
-  export const start = async () => {
+  export const type = async () => {
     // reset then start typing
     reset();
     isBlinking = false;
