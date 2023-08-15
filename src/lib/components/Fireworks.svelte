@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
 
   const DEFAULT_SIZE = 30;
+  const DEFAULT_DELAY = 0;
 
   interface Firework {
     x: Number; // .firework { left % }
@@ -9,24 +10,32 @@
     offsetX: Number; // .firework { --x vmin }
     offsetY: Number; // .firework { --initialY vmin }
     size?: Number; // .firework { --finalSize vmin }
-    delay?: Number; // .firewrok { --delay s }
+    delay?: Number; // .firework { --delay s }
   }
 
   let fireworks: Firework[] = [];
-  export function launch(fireworks: Firework[], repeat: Number) {}
+
+  export function launch(fireworks: Firework[], repeat: Number) {
+
+  }
 
   fireworks = [
     { x: 30, y: 30, offsetX: 20, offsetY: 80, size: 20 },
-    { x: 70, y: 40, offsetX: -20, offsetY: 80, size: 20, delay: -0.25 },
-    { x: 50, y: 20, offsetX: 0, offsetY: 80, size: 20, delay: -0.4}
+    { x: 70, y: 40, offsetX: -20, offsetY: 80, delay: -0.25, size: 20 },
+    { x: 50, y: 20, offsetX: 0, offsetY: 100, delay: -0.4, size: 40 }
   ];
 </script>
 
 {#each fireworks as firework}
   <div
     class="firework"
-    style="left:{firework.x}%; top:{firework.y}%; --x:{firework.offsetX}vmin; --initialY:{firework.offsetY}vmin; --finalSize:{firework.size ||
-      DEFAULT_SIZE}vmin; --delay:{firework.delay || 0}s;"
+    style="
+    left:{firework.x}%; 
+    top:{firework.y}%; 
+    --x:{firework.offsetX}vmin; 
+    --initialY:{firework.offsetY}vmin; 
+    --finalSize:{firework.size || DEFAULT_SIZE}vmin; 
+    --delay:{firework.delay || DEFAULT_DELAY}s;"
   />
 {/each}
 
