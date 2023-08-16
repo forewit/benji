@@ -42,6 +42,9 @@
   /* https://alvaromontoro.com/blog/68002/creating-a-firework-effect-with-css */
   @keyframes firework {
     0% {
+      opacity: 0; /*fixes random flashes on iOS*/
+    }
+    1% {
       left: var(--initialLeft);
       top: var(--initialTop);
       width: 0.5vmin;
