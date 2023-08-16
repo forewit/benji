@@ -14,7 +14,7 @@ Talk to you soon 🎉,
 
 Marc`;
 
-  async function runTypewriter() {
+  async function begin() {
     fireworks1.launch(
       -1,
       {
@@ -68,7 +68,7 @@ Marc`;
 </div>
 
 <div id="button-container">
-  <button on:click={runTypewriter}>Go</button>
+  <button on:click={begin}>Go</button>
 </div>
 
 <style>
