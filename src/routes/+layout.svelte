@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Fireworks from "$lib/components/Fireworks.svelte";
   import { onMount } from "svelte";
 
   let notchLeft = 0,
@@ -76,7 +75,7 @@
     padding: 0;
   }
   :global(html, body) {
-    background: #234;
+    background: white;
   }
 
   /* glowing neon effect */
