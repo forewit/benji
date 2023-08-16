@@ -15,17 +15,18 @@
   let activeFireworks: Firework[] = [];
   let iterationCount = "infinite";
 
-  export async function launch(repeat: number, ...fireworks: Firework[]) {
+  export function launch(repeat: number, ...fireworks: Firework[]) {
     iterationCount = repeat < 0 ? "infinite" : repeat.toString();
     activeFireworks = fireworks;
   }
 </script>
 
-{#each activeFireworks as firework, i}
-  <div
-    bind:this={fireworkElms[i]}
-    class="firework"
-    style="
+{#key activeFireworks}
+  {#each activeFireworks as firework, i}
+    <div
+      bind:this={fireworkElms[i]}
+      class="firework"
+      style="
     left:{firework.x}%; 
     top:{firework.y}%; 
     --x:{firework.offsetX}vmin; 
@@ -33,8 +34,9 @@
     --finalSize:{firework.size || DEFAULT_SIZE}vmin; 
     --delay:{firework.delay || DEFAULT_DELAY}s;
     animation-iteration-count:{iterationCount};"
-  />
-{/each}
+    />
+  {/each}
+{/key}
 
 <style>
   /* https://alvaromontoro.com/blog/68002/creating-a-firework-effect-with-css */
