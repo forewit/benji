@@ -4,12 +4,12 @@
 
   interface Firework {
     color: string;
-    left: number; // .firework { left % }
-    top: number; // .firework { top % }
-    initialLeft: number; // .firework { --left vmin }
-    initialTop: number; // .firework { --initialTop vmin }
-    size?: number; // .firework { --finalSize vmin }
-    delay?: number; // .firework { --delay s }
+    left: number;
+    top: number;
+    initialLeft: number;
+    initialTop: number;
+    size?: number;
+    delay?: number;
   }
 
   let activeFireworks: Firework[] = [];

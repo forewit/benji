@@ -8,7 +8,7 @@
 
   let block1 = `Hey Benji 👋,
 
-Send me a text so I know you saw this!
+Love you!
 
 Talk to you soon 🎉,
 
