@@ -1,12 +1,12 @@
 <script lang="ts">
-  const DEFAULT_SIZE = 200;
+  const DEFAULT_SIZE = 40;
   const DEFAULT_DELAY = 0;
 
   interface Firework {
     color: string;
-    x: number; // .firework { left % }
-    y: number; // .firework { top % }
-    initialX: number; // .firework { --x vmin }
+    left: number; // .firework { left % }
+    top: number; // .firework { top % }
+    initialX: number; // .firework { --left vmin }
     initialY: number; // .firework { --initialY vmin }
     size?: number; // .firework { --finalSize vmin }
     delay?: number; // .firework { --delay s }
@@ -27,11 +27,11 @@
       class="firework"
       style="
         --color:{firework.color};
-        --x:{firework.x}%;
-        --y:{firework.y}%;
+        --left:{firework.left}%;
+        --top:{firework.top}%;
         --initialX:{firework.initialX}%;
         --initialY:{firework.initialY}%;
-        --size:{firework.size || DEFAULT_SIZE}px;
+        --size:{firework.size || DEFAULT_SIZE}vmin;
         --delay:{firework.delay || DEFAULT_DELAY}s;
         --iterations:{iterations}"
     />
@@ -59,8 +59,8 @@
 
   .firework {
     --color: yellow;
-    --x: 50%; /*explosion position*/
-    --y: 50%;
+    --left: 50%; /*explosion position*/
+    --top: 50%;
     --initialX: 50%; /*launch offset*/
     --initialY: 50%;
     --size: 200px;
@@ -73,8 +73,8 @@
   .firework::after {
     content: "";
     position: absolute;
-    left: var(--x);
-    top: var(--y);
+    left: var(--left);
+    top: var(--top);
     transform: translate(-50%, -50%);
     width: 0.5vmin;
     aspect-ratio: 1;

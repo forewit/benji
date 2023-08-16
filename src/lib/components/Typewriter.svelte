@@ -58,8 +58,8 @@
   // keep the cursor blinking
   function updateCursor() {
     if (disableCursor) cursor = " ";
-    else if (!isBlinking) cursor = "| ";
-    else cursor = cursor == " " ? "| " : " ";
+    else if (!isBlinking) cursor = "|";
+    else cursor = cursor == " " ? "|" : " ";
   }
 
   onMount(() => {
