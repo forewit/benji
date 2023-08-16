@@ -66,7 +66,7 @@
     --top: 50%;
     --initialLeft: 50%; /*initial position*/
     --initialTop: 50%;
-    --size: 200px;
+    --size: 40vmin;
     --delay: 0s;
     --iterations: infinite;
   }
