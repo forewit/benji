@@ -6,7 +6,7 @@
   let typewriter1: Typewriter;
   let fireworks1: Fireworks;
 
-  let block1 = `Hey there 👋,
+  let block1 = `Hey Benji 👋,
 
 Send me a text so I know you saw this!
 
@@ -47,8 +47,19 @@ Marc`;
     console.log("finished 🏁");
   }
 
-  onMount(() => {});
+  const words = ["awesome", "cool", "sweet", "fun", "🎉"];
+  let wordIndex = 0;
+
+  onMount(() => {
+    setInterval(() => {
+      wordIndex = (wordIndex + 1) % (words.length);
+    }, 500);
+  });
 </script>
+
+<svelte:head>
+  <title>Benji is {words[wordIndex]}</title>
+</svelte:head>
 
 <Fireworks bind:this={fireworks1} />
 
