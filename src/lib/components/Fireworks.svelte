@@ -1,39 +1,39 @@
 <script lang="ts">
-  const DEFAULT_SIZE = 30;
+  const DEFAULT_SIZE = 200;
   const DEFAULT_DELAY = 0;
 
   interface Firework {
+    color: string;
     x: number; // .firework { left % }
     y: number; // .firework { top % }
-    offsetX: number; // .firework { --x vmin }
-    offsetY: number; // .firework { --initialY vmin }
+    initialX: number; // .firework { --x vmin }
+    initialY: number; // .firework { --initialY vmin }
     size?: number; // .firework { --finalSize vmin }
     delay?: number; // .firework { --delay s }
   }
 
-  let fireworkElms: HTMLDivElement[] = [];
   let activeFireworks: Firework[] = [];
-  let iterationCount = "infinite";
+  let iterations = "infinite";
 
   export function launch(repeat: number, ...fireworks: Firework[]) {
-    iterationCount = repeat < 0 ? "infinite" : repeat.toString();
+    iterations = repeat < 0 ? "infinite" : repeat.toString();
     activeFireworks = fireworks;
   }
 </script>
 
 {#key activeFireworks}
-  {#each activeFireworks as firework, i}
+  {#each activeFireworks as firework}
     <div
-      bind:this={fireworkElms[i]}
       class="firework"
       style="
-    left:{firework.x}%; 
-    top:{firework.y}%; 
-    --x:{firework.offsetX}vmin; 
-    --initialY:{firework.offsetY}vmin; 
-    --finalSize:{firework.size || DEFAULT_SIZE}vmin; 
-    --delay:{firework.delay || DEFAULT_DELAY}s;
-    animation-iteration-count:{iterationCount};"
+        --color:{firework.color};
+        --x:{firework.x}%;
+        --y:{firework.y}%;
+        --initialX:{firework.initialX}%;
+        --initialY:{firework.initialY}%;
+        --size:{firework.size || DEFAULT_SIZE}px;
+        --delay:{firework.delay || DEFAULT_DELAY}s;
+        --iterations:{iterations}"
     />
   {/each}
 {/key}
@@ -42,8 +42,9 @@
   /* https://alvaromontoro.com/blog/68002/creating-a-firework-effect-with-css */
   @keyframes firework {
     0% {
-      transform: translate(var(--x), var(--initialY));
-      width: var(--initialSize);
+      left: var(--initialX);
+      top: var(--initialY);
+      width: 0.5vmin;
       opacity: 1;
     }
     50% {
@@ -51,140 +52,56 @@
       opacity: 1;
     }
     100% {
-      width: var(--finalSize);
+      width: var(--size);
       opacity: 0;
     }
+  }
+
+  .firework {
+    --color: yellow;
+    --x: 50%; /*explosion position*/
+    --y: 50%;
+    --initialX: 50%; /*launch offset*/
+    --initialY: 50%;
+    --size: 200px;
+    --delay: 0s;
+    --iterations: infinite;
   }
 
   .firework,
   .firework::before,
   .firework::after {
-    --initialSize: 0.5vmin;
-    /* --finalSize: 40vmin; */
-    --particleSize: 0.2vmin;
-    --color1: yellow;
-    --color2: khaki;
-    --color3: white;
-    --color4: lime;
-    --color5: gold;
-    --color6: mediumseagreen;
-    --y: calc(var(--finalSize) * -1 / 2);
-    /* --x: 0vmin; */
-    /* --initialY: 0vmin; */
     content: "";
-    opacity: 0;
-    animation: firework 2s infinite;
-    animation-delay: var(--delay);
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, var(--y));
-    width: var(--initialSize);
+    left: var(--x);
+    top: var(--y);
+    transform: translate(-50%, -50%);
+    width: 0.5vmin;
     aspect-ratio: 1;
-    background: radial-gradient(
-          circle,
-          var(--color1) var(--particleSize),
-          #0000 0
-        )
-        50% 0%,
-      radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 100%
-        50%,
-      radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 50%
-        100%,
-      radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 0% 50%,
-      /* bottom right */
-        radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 80%
-        90%,
-      radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 95%
-        90%,
-      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 90%
-        70%,
-      radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 100%
-        60%,
-      radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 55%
-        80%,
-      radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 70%
-        77%,
-      /* bottom left */
-        radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 22%
-        90%,
-      radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 45%
-        90%,
-      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 33%
-        70%,
-      radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 10%
-        60%,
-      radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 31%
-        80%,
-      radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 28%
-        77%,
-      radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 13%
-        72%,
-      /* top left */
-        radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 80%
-        10%,
-      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 95%
-        14%,
-      radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 90%
-        23%,
-      radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 100%
-        43%,
-      radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 85%
-        27%,
-      radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 77%
-        37%,
-      radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 60% 7%,
-      /* top right */
-        radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 22%
-        14%,
-      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 45%
-        20%,
-      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 33%
-        34%,
-      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 10%
-        29%,
-      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 31%
-        37%,
-      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 28% 7%,
-      radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 13%
-        42%;
-    background-size: var(--initialSize) var(--initialSize);
+    opacity: 0;
+    background: radial-gradient(circle, var(--color) 0.2vmin, #0000 0) 50% 00%,
+      radial-gradient(circle, var(--color) 0.3vmin, #0000 0) 00% 50%,
+      radial-gradient(circle, var(--color) 0.5vmin, #0000 0) 50% 99%,
+      radial-gradient(circle, var(--color) 0.2vmin, #0000 0) 99% 50%,
+      radial-gradient(circle, var(--color) 0.3vmin, #0000 0) 80% 90%,
+      radial-gradient(circle, var(--color) 0.5vmin, #0000 0) 95% 90%,
+      radial-gradient(circle, var(--color) 0.5vmin, #0000 0) 10% 60%,
+      radial-gradient(circle, var(--color) 0.2vmin, #0000 0) 31% 80%,
+      radial-gradient(circle, var(--color) 0.3vmin, #0000 0) 80% 10%,
+      radial-gradient(circle, var(--color) 0.2vmin, #0000 0) 90% 23%,
+      radial-gradient(circle, var(--color) 0.3vmin, #0000 0) 45% 20%,
+      radial-gradient(circle, var(--color) 0.5vmin, #0000 0) 13% 24%;
+    background-size: 0.5vmin 0.5vmin; /*locks background size even as element gets bigger*/
     background-repeat: no-repeat;
+    animation: firework 2s var(--iterations);
+    animation-delay: var(--delay);
   }
 
   .firework::before {
-    --x: -50%;
-    --y: -50%;
-    --initialY: -50%;
-    transform: translate(-50%, -50%) rotate(40deg) scale(1.3) rotateY(40deg);
+    transform: translate(-50%, -50%) rotate(25deg) !important;
   }
 
   .firework::after {
-    --x: -50%;
-    --y: -50%;
-    --initialY: -50%;
-    transform: translate(-50%, -50%) rotate(170deg) scale(1.15) rotateY(-30deg);
-  }
-
-  .firework:nth-child(2),
-  .firework:nth-child(2)::before,
-  .firework:nth-child(2)::after {
-    --color1: pink;
-    --color2: violet;
-    --color3: fuchsia;
-    --color4: orchid;
-    --color5: plum;
-    --color6: lavender;
-  }
-
-  .firework:nth-child(3),
-  .firework:nth-child(3)::before,
-  .firework:nth-child(3)::after {
-    --color1: cyan;
-    --color2: lightcyan;
-    --color3: lightblue;
-    --color4: PaleTurquoise;
-    --color5: SkyBlue;
-    --color6: lavender;
+    transform: translate(-50%, -50%) rotate(-37deg) !important;
   }
 </style>

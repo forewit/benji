@@ -75,7 +75,7 @@
     padding: 0;
   }
   :global(html, body) {
-    background: white;
+    background: #234; /*shows behind safari toolbar*/
   }
 
   /* glowing neon effect */

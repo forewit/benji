@@ -1,6 +1,7 @@
 <script lang="ts">
   import Fireworks from "$lib/components/Fireworks.svelte";
   import Typewriter from "$lib/components/Typewriter.svelte";
+  import { onMount } from "svelte";
 
   let typewriter1: Typewriter;
   let fireworks1: Fireworks;
@@ -15,16 +16,20 @@ Marc`;
 
   async function runTypewriter() {
     fireworks1.launch(
-      1,
-      { x: 30, y: 30, offsetX: 20, offsetY: 80, size: 20 },
-      { x: 70, y: 40, offsetX: -20, offsetY: 80, delay: -0.25, size: 20 },
-      { x: 50, y: 20, offsetX: 0, offsetY: 100, delay: -0.4, size: 40 }
+      -1,
+      { color: "lightgreen", x: 50, y: 40, initialX: 45, initialY: 100, size: 300 },
+      { color: "red", x: 50, y: 40, initialX: 50, initialY: 100, delay: 0.25 },
+      { color: "yellow", x: 50, y: 40, initialX: 55, initialY: 100, delay: 0.5, size: 400 },
     );
-
     await typewriter1.type();
     console.log("finished 🏁");
   }
+
+  onMount(()=>{
+    
+  })
 </script>
+
 
 <Fireworks bind:this={fireworks1} />
 <Typewriter bind:this={typewriter1} text={block1} />
