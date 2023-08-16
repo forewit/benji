@@ -52,7 +52,7 @@ Marc`;
 
   onMount(() => {
     setInterval(() => {
-      wordIndex = (wordIndex + 1) % (words.length);
+      wordIndex = (wordIndex + 1) % words.length;
     }, 500);
   });
 </script>
@@ -73,6 +73,7 @@ Marc`;
 
 <style>
   #text-container {
+    z-index: 2;
     position: absolute;
     top: 30%;
     width: 100%;
@@ -86,6 +87,7 @@ Marc`;
     width: 100%;
     display: flex;
     justify-content: center;
+    z-index: 1;
   }
   button {
     background: #234;
