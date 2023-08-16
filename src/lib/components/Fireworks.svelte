@@ -6,8 +6,8 @@
     color: string;
     left: number; // .firework { left % }
     top: number; // .firework { top % }
-    initialX: number; // .firework { --left vmin }
-    initialY: number; // .firework { --initialY vmin }
+    initialLeft: number; // .firework { --left vmin }
+    initialTop: number; // .firework { --initialTop vmin }
     size?: number; // .firework { --finalSize vmin }
     delay?: number; // .firework { --delay s }
   }
@@ -29,8 +29,8 @@
         --color:{firework.color};
         --left:{firework.left}%;
         --top:{firework.top}%;
-        --initialX:{firework.initialX}%;
-        --initialY:{firework.initialY}%;
+        --initialLeft:{firework.initialLeft}%;
+        --initialTop:{firework.initialTop}%;
         --size:{firework.size || DEFAULT_SIZE}vmin;
         --delay:{firework.delay || DEFAULT_DELAY}s;
         --iterations:{iterations}"
@@ -42,8 +42,8 @@
   /* https://alvaromontoro.com/blog/68002/creating-a-firework-effect-with-css */
   @keyframes firework {
     0% {
-      left: var(--initialX);
-      top: var(--initialY);
+      left: var(--initialLeft);
+      top: var(--initialTop);
       width: 0.5vmin;
       opacity: 1;
     }
@@ -61,8 +61,8 @@
     --color: yellow;
     --left: 50%; /*explosion position*/
     --top: 50%;
-    --initialX: 50%; /*launch offset*/
-    --initialY: 50%;
+    --initialLeft: 50%; /*initial position*/
+    --initialTop: 50%;
     --size: 200px;
     --delay: 0s;
     --iterations: infinite;
