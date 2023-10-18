@@ -7,13 +7,13 @@
   let fireworks1: Fireworks;
 
   let block1 = `Benji... I just wanted to say that I love you.
-  Jess and I are praying for you :)
-  
-  1. that you would Honor God
-  2. that God challenge you in ways that make you dependant on Him
-  3. that you will lift other people up while you are in NY (you have a lot to give!)
-  
-  Thanks for being such an awesome brother and I am looking forward to seeing you soon!`;
+Jess and I are praying for you :)
+
+1. that you would Honor God
+2. that God challenge you in ways that make you dependant on Him
+3. that you will lift other people up while you are in NY (you have a lot to give!)
+
+Thanks for being such an awesome brother and I am looking forward to seeing you soon!`;
 
   async function begin() {
     fireworks1.launch(
