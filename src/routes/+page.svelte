@@ -6,20 +6,21 @@
   let typewriter1: Typewriter;
   let fireworks1: Fireworks;
 
-  let block1 = `Hey Benji 👋,
-
-Love you!
-
-Talk to you soon 🎉,
-
-Marc`;
+  let block1 = `Benji... I just wanted to say that I love you.
+  Jess and I are praying for you :)
+  
+  1. that you would Honor God
+  2. that God challenge you in ways that make you dependant on Him
+  3. that you will lift other people up while you are in NY (you have a lot to give!)
+  
+  Thanks for being such an awesome brother and I am looking forward to seeing you soon!`;
 
   async function begin() {
     fireworks1.launch(
-      -1,
+      2,
       {
         color: "lightgreen",
-        left: 50,
+        left: 20,
         top: 50,
         initialLeft: 45,
         initialTop: 100,
@@ -28,15 +29,15 @@ Marc`;
       {
         color: "red",
         left: 50,
-        top: 50,
+        top: 10,
         initialLeft: 50,
         initialTop: 100,
         delay: 0.25,
       },
       {
         color: "yellow",
-        left: 50,
-        top: 40,
+        left: 80,
+        top: 50,
         initialLeft: 55,
         initialTop: 100,
         delay: 0.5,
