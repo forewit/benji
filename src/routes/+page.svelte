@@ -1,53 +1,8 @@
 <script lang="ts">
-  import Fireworks from "$lib/components/Fireworks.svelte";
-  import Typewriter from "$lib/components/Typewriter.svelte";
   import { onMount } from "svelte";
+import Article  from "$lib/components/Article.svelte"
 
-  let typewriter1: Typewriter;
-  let fireworks1: Fireworks;
-
-  let block1 = `Benji... I just wanted to say that I love you.
-Jess and I are praying for you :)
-
-1. that you would Honor God
-2. that God challenge you in ways that make you dependant on Him
-3. that you will lift other people up while you are in NY (you have a lot to give!)
-
-Thanks for being such an awesome brother and I am looking forward to seeing you soon!`;
-
-  async function begin() {
-    fireworks1.launch(
-      2,
-      {
-        color: "lightgreen",
-        left: 20,
-        top: 50,
-        initialLeft: 45,
-        initialTop: 100,
-        size: 30,
-      },
-      {
-        color: "red",
-        left: 50,
-        top: 10,
-        initialLeft: 50,
-        initialTop: 100,
-        delay: 0.25,
-      },
-      {
-        color: "yellow",
-        left: 80,
-        top: 50,
-        initialLeft: 55,
-        initialTop: 100,
-        delay: 0.5,
-        size: 60,
-      }
-    );
-    await typewriter1.type();
-    console.log("finished 🏁");
-  }
-
+  
   const words = ["awesome", "cool", "sweet", "fun", "🎉"];
   let wordIndex = 0;
 
@@ -62,36 +17,7 @@ Thanks for being such an awesome brother and I am looking forward to seeing you 
   <title>Benji is {words[wordIndex]}</title>
 </svelte:head>
 
-<Fireworks bind:this={fireworks1} />
-
-<div id="text-container">
-  <Typewriter bind:this={typewriter1} text={block1} />
-</div>
-
-<div id="button-container">
-  <button on:click={begin}>Go</button>
-</div>
+<Article markdownURL="../markdown/letter.md"/>
 
 <style>
-  #text-container {
-    z-index: 2;
-    position: absolute;
-    top: 30%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-  }
-  #button-container {
-    position: absolute;
-    bottom: 30%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    z-index: 1;
-  }
-  button {
-    background: #234;
-    padding: 10px;
-  }
 </style>
