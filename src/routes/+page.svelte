@@ -17,7 +17,4 @@ import Article  from "$lib/components/Article.svelte"
   <title>Benji is {words[wordIndex]}</title>
 </svelte:head>
 
-<Article markdownURL="../markdown/letter.md"/>
-
-<style>
-</style>
+<Article markdownURL="/markdown/letter.md"/>
