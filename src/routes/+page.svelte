@@ -1,5 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { page } from "$app/stores";
+  import { dev } from '$app/environment';
+
+
 import Article  from "$lib/components/Article.svelte"
 
   
@@ -17,4 +21,4 @@ import Article  from "$lib/components/Article.svelte"
   <title>Benji is {words[wordIndex]}</title>
 </svelte:head>
 
-<Article markdownURL="/markdown/letter.md"/>
+<Article markdownURL="{$page.url.pathname}markdown/letter.md"/>
